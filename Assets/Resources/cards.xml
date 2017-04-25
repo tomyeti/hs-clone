@@ -1,0 +1,462 @@
+<minions>
+    <minion>
+        <id>Wisp01</id>         <!--Name by which the game knows the card by. Must be unique. -->
+        <name>Wisp</name>       <!--Name that appears on the card. Plain text, doesnt need to be unique-->
+        <tags></tags>           <!--Additional tags that assist the filter system, such as "Token". 
+									Token would mean that it's not collectible, and therefore would be left out
+									of the collection screen' -->
+        <manaCost>0</manaCost>
+        <attack>1</attack>
+        <health>1</health>
+        <text></text>          <!--Text that appears on the card. Descriptive, not Prescritive. -->
+        <class>neutral</class> <!--Which class the card belongs to. ie Mage, Warrior, etc-->
+        <rarity>common</rarity><!--The rarity of the card. Common, Rare, Epic, and Legendary. Empty means it has none (base set) -->
+        <race></race>          <!--The race of the card, ie "Beast" or "Murloc" -->
+        <set>classic</set>     <!--Which set the card belongs to, ie "Ungoro" or "Classic"-->
+        <effects>               <!--This tag contains all of the available effects of the card.
+                                   Battlecries, taunts, deathrattles, etc are all listed here.
+                                   Certain effects can be prescriptive when they can be anticipated, like
+                                   damaging battlecries or card draw. But more complicated effects like
+                                   N'Zoth or Yogg Saron must be listed as "custom" and coded manually
+                                   in the code base.
+                                     -->
+        </effects>
+    </minion>
+
+    <minion>
+        <id>InjuredBattlemaster</id>
+        <name>Injured Battlemaster</name>
+        <tags></tags>
+        <manaCost>3</manaCost>
+        <attack>4</attack>
+        <health>7</health>
+        <text>Battlecry: Deal 4 damage to HIMSELF.</text>
+        <class>neutral</class>
+        <rarity>rare</rarity>
+        <race></race>
+        <set>classic</set>
+        <effects>
+            <!--Battle cry effect, happens one time when played.
+                The id indicates a common action in the game, this one being
+                damage. Damaging something is very common, so we anticipate
+                that action in the code and call a damage function. value
+                is what gets passed into the function we're calling, in this
+                instance a damage value of 4. targets are all of the possible
+                targets, separated by commas. When there are comma separated targets
+                it randomly picks one. filters are used to give the player a
+                specific target set to pick from, for example "minions only".
+                target means no player choice, filter means player choice. Filter
+                is basically only used on battlecries-->
+            <battlecry id="DAMAGE" value="4" targets="self"/>
+        </effects>
+    </minion>
+
+    <minion>
+        <id>LeperGnome</id>
+        <name>Leper Gnome</name>
+        <tags></tags>
+        <manaCost>1</manaCost>
+        <attack>1</attack>
+        <health>1</health>
+        <text>Deathrattle: Deal 2 damage to the enemy hero</text>
+        <class>neutral</class>
+        <rarity>common</rarity>
+        <race></race>
+        <set>classic</set>
+        <effects>
+            <deathrattle id="DAMAGE" value="2" targets="hero-enemy"/>
+        </effects>
+    </minion>
+
+    <minion>
+        <id>MistressOfMixtures</id>
+        <name>Mistress of Mixtures</name>
+        <tags></tags>
+        <manaCost>1</manaCost>
+        <attack>2</attack>
+        <health>2</health>
+        <text>Deathrattle: Restore 4 Health to both players</text>
+        <class>neutral</class>
+        <rarity>common</rarity>
+        <race></race>
+        <set>ungoro</set>
+        <effects>
+            <deathrattle id="HEAL" value="4" targets="hero-enemy"/>
+            <deathrattle id="HEAL" value="4" targets="hero-ally"/>
+
+        </effects>
+    </minion>
+
+    <minion>
+        <id>BoomBot01</id>
+        <name>Boom-Bot</name>
+        <tags>Token</tags>
+        <manaCost>1</manaCost>
+        <attack>1</attack>
+        <health>1</health>
+        <text>Deathrattle: Deal 1-4 damage to a random enemy</text>
+        <class>neutral</class>
+        <rarity>common</rarity>
+        <race></race>
+        <set>gvg</set>
+        <effects>
+            <deathrattle id="DAMAGE" value="1-4" targets="character-enemy"/>
+        </effects>
+    </minion>
+
+    <minion>
+        <id>DrBoom</id>
+        <name>Dr. Boom</name>
+        <tags></tags>
+        <manaCost>7</manaCost>
+        <attack>7</attack>
+        <health>7</health>
+        <text>Battlecry: Summon 2 boombots</text>
+        <class>neutral</class>
+        <rarity>legendary</rarity>
+        <race></race>
+        <set>gvg</set>
+        <effects>
+            <battlecry id="SUMMON" filter="Boom-Bot" position="left"/>
+            <battlecry id="SUMMON" filter="Boom-Bot" position="right"/>
+        </effects>
+    </minion>
+
+    <minion>
+        <id>RamWrangler</id>
+        <name>Ram Wrangler</name>
+        <tags></tags>
+        <manaCost>5</manaCost>
+        <attack>3</attack>
+        <health>3</health>
+        <text>Battlecry: If you control a beast, summon a random beast</text>
+        <class>neutral</class>
+        <rarity>rare</rarity>
+        <race></race>
+        <set>gvg</set>
+        <effects>
+			<condition id="MINION_EXISTS" filter="minion-ally-beast" glow="true" />
+            <battlecry id="SUMMON" filter="beast" position="left"/>
+        </effects>
+    </minion>
+
+
+    <minion>
+        <id>Abusive Sergent</id>
+        <name>Abusive Sergent</name>
+        <tags></tags>
+        <manaCost>1</manaCost>
+        <attack>1</attack>
+        <health>1</health>
+        <text>Battlecry: Give a minion +2 attack this turn</text>
+        <class>neutral</class>
+        <rarity>common</rarity>
+        <race></race>
+        <set>classic</set>
+        <effects>
+            <battlecry id="BUFF" filter="minion" value="2/0" duration="endTurn"/>
+        </effects>
+    </minion>
+
+    <minion>
+        <id>AirElemental01</id>
+        <name>Air Elemental</name>
+        <tags></tags>
+        <manaCost>1</manaCost>
+        <attack>2</attack>
+        <health>1</health>
+        <text>Cannot be targeted by spells or hero powers</text>
+        <class>shaman</class>
+        <rarity>common</rarity>
+        <race></race>
+        <set>classic</set>
+        <effects>
+            <spellProtection/>
+        </effects>
+    </minion>
+
+    <minion>
+        <id>BloodImp</id>
+        <name>Blood Imp</name>
+        <tags></tags>
+        <manaCost>1</manaCost>
+        <attack>0</attack>
+        <health>1</health>
+        <text>Stealth. At the end of your turn, give another random friendly minion +1 health</text>
+        <class>warlock</class>
+        <rarity>common</rarity>
+        <race></race>
+        <set>classic</set>
+        <effects>
+            <endOfTurn id="BUFF" targets="minion-ally" value="0/1"/>
+        </effects>
+    </minion>
+
+    <minion>
+        <id>AngryChicken</id>
+        <name>Angry Chicken</name>
+        <tags></tags>
+        <manaCost>1</manaCost>
+        <attack>1</attack>
+        <health>1</health>
+        <text>Enrage: +5 attack</text>
+        <class>neutral</class>
+        <rarity>common</rarity>
+        <race></race>
+        <set>classic</set>
+        <effects>
+            <enrage value="5/0"/>
+        </effects>
+    </minion>
+
+    <minion>
+        <id>HungryCrab</id>
+        <name>Hungry Crab</name>
+        <tags></tags>
+        <manaCost>1</manaCost>
+        <attack>1</attack>
+        <health>2</health>
+        <text>Battlecry: Destroy a murloc and gain +2/+2</text>
+        <class>neutral</class>
+        <rarity>epic</rarity>
+        <race></race>
+        <set>classic</set>
+        <effects>
+            <battlecry id="DESTROY" targets="murloc" trigger="0"/>
+            <trigger id="BUFF" targets="self" value="2/2" triggerID="0" />
+        </effects>
+    </minion>
+
+    <minion>
+        <id>CorneredSentry</id>
+        <name>Cornered Sentry</name>
+        <tags></tags>
+        <manaCost>2</manaCost>
+        <attack>2</attack>
+        <health>6</health>
+        <text>Taunt. Battlecry: Summon three 1/1 raptors for your opponent</text>
+        <class>warrior</class>
+        <rarity>rare</rarity>
+        <race></race>
+        <set>classic</set>
+        <effects>
+			<taunt/>
+            <battlecry id="SUMMON_ENEMY" targets="Raptor001" count="3"/>
+            <!--<battlecry id="SUMMON_ENEMY" targets="Raptor001"/>
+            <battlecry id="SUMMON_ENEMY" targets="Raptor001"/>-->
+        </effects>
+    </minion>
+
+    <minion>
+        <id>Raptor01</id>
+        <name>Raptor</name>
+        <tags>token</tags>
+        <manaCost>1</manaCost>
+        <attack>1</attack>
+        <health>1</health>
+        <text></text>
+        <class>neutral</class>
+        <rarity></rarity>
+        <race>beast</race>
+        <set>ungoro</set>
+        <effects>
+        </effects>
+    </minion>
+
+	<!-- Some priest cards -->
+
+	<minion>
+        <id>ConfessorPaletress</id>
+        <name>Confessor Paletress</name>
+        <tags></tags>
+        <manaCost>7</manaCost>
+        <attack>5</attack>
+        <health>4</health>
+        <text>Inspire: Summon a random Legendary minion</text>
+        <class>Priest</class>
+        <rarity>Legendary</rarity>
+        <race>beast</race>
+        <set>tgt</set>
+        <effects>
+			<inspire id="SUMMON" filter="legendary, minion" position="right"/>
+        </effects>
+    </minion>
+
+	<minion>
+        <id>MirageCaller</id>
+        <name>Mirage Caller</name>
+        <tags></tags>
+        <manaCost>3</manaCost>
+        <attack>2</attack>
+        <health>3</health>
+        <text>Battlecry: Choose a friendly minion, summon a 1/1 copy of it</text>
+        <class>Priest</class>
+        <rarity>Legendary</rarity>
+        <race>beast</race>
+        <set>tgt</set>
+        <effects>
+			<battlecry id="SUMMON_COPY" targets="minion-ally" position="right" trigger="myTriggerID"/>
+			<trigger id="SET" targets="triggerTarget" value="1/1" triggerID="myTriggerID" />
+		</effects>
+    </minion>
+
+    <minion>
+        <id>HeraldVolazj</id>
+        <name>Herald Volazj</name>
+        <tags></tags>
+        <manaCost>6</manaCost>
+        <attack>5</attack>
+        <health>5</health>
+        <text>Battlecry: Summon a 1/1 copy of each of your other minions</text>
+        <class>Priest</class>
+        <rarity>Legendary</rarity>
+        <race>beast</race>
+        <set>tgt</set>
+        <effects>
+			<battlecry id="SUMMON_COPY" targets="minion-ally-all, not-self" position="right" trigger="myTriggerID"/>
+			<trigger id="SET" targets="triggerTarget" value="1/1" triggerID="myTriggerID" />
+		</effects>
+    </minion>
+	<minion>
+        <id>ShiftingShade</id>
+        <name>Shifting Shade</name>
+        <tags></tags>
+        <manaCost>4</manaCost>
+        <attack>4</attack>
+        <health>3</health>
+        <text>Deathrattle: Copy a card from your opponents deck and add it to your hand</text>
+        <class>Priest</class>
+        <rarity>Rare</rarity>
+        <race></race>
+        <set>wotog</set>
+        <effects>
+			<deathrattle id="ADD_CARD" filter="enemyDeck"/>
+		</effects>
+    </minion>
+
+	<minion>
+        <id>PriestOfTheFeast</id>
+        <name>Priest Of The Feast</name>
+        <tags></tags>
+        <manaCost>4</manaCost>
+        <attack>3</attack>
+        <health>6</health>
+        <text>Whenever you cast a spell, restore 3 health to your hero</text>
+        <class>Priest</class>
+        <rarity>Common</rarity>
+        <race></race>
+        <set>onik</set>
+        <effects>
+			<trigger id="HEAL" filter="hero-ally" value="3" triggerID="onSpellCast-ally" />
+		</effects>
+    </minion>
+
+	<minion>
+        <id>DrakonidOperative</id>
+        <name>Drakonid Operative</name>
+        <tags></tags>
+        <manaCost>5</manaCost>
+        <attack>5</attack>
+        <health>6</health>
+        <text>Battlecry: If you're holding a Dragon, Discover a card in your opponents deck</text>
+        <class>Priest</class>
+        <rarity>Rare</rarity>
+        <race></race>
+        <set>msog</set>
+        <effects>
+			<condition id="HAND_CONTAINS" filter="minion-dragon" glow="true" />
+			<battlecry id="DISCOVER" filter="enemyDeck" />
+		</effects>
+    </minion>
+
+	<minion>
+        <id>KabalSongstealer</id>
+        <name>Kabal Songstealer</name>
+        <tags></tags>
+        <manaCost>5</manaCost>
+        <attack>5</attack>
+        <health>5</health>
+        <text>Battlecry: silence a minion</text>
+        <class>Priest</class>
+        <rarity>Rare</rarity>
+        <race></race>
+        <set>msog</set>
+        <effects>
+			<battlecry id="SILENCE" filter="minion" />
+		</effects>
+    </minion>
+
+	<!--Some druid cards	-->
+
+	<minion>
+        <id>Cenarius</id>
+        <name>Cenarius</name>
+        <tags></tags>
+        <manaCost>9</manaCost>
+        <attack>5</attack>
+        <health>8</health>
+        <text>Choose One: Give your other minions +2/+2; or Summon two 2/2 Treants with Taunt</text>
+        <class>Priest</class>
+        <rarity>Rare</rarity>
+        <race></race>
+        <set>msog</set>
+        <effects>
+			<!-- We don't program the effect here. It might not be obvious, but all Choose effects
+				 allow you to choose a spell. They always cost 0, they always have their own picture.
+				 So, here we only want to list the spell's ids that we want to use, comma separated.
+				 We could technically list more than 2, like a discover effect. Choose is always cast 
+				 immediately and with minions, it is always cast on the minion itself, 
+				 whereas Discover can be treated differently. We can assume that every minion Below, i will make examples 
+				 of the spells, but would like to keep spells on a separate list otherwise-->
+			<battlecry id="CHOOSE" choices="DemigodsFavor, ShandosLesson" />
+		</effects>
+    </minion>
+
+	<spell>
+		<id>DemigodsFavor</id>
+		<name>Demigod's Favor</name>
+		<tags>choose</tags>
+		<manaCost>0</manaCost>
+		<text>Give your other minions +2/+2.</text>
+		<class>druid</class>
+		<rarity></rarity>
+		<set>classic</set>
+		<effects>
+			<cast id="BUFF" value="2/2" filter="minion-ally-all, not-self" />
+		</effects>
+	</spell>
+
+	<spell>
+		<id>ShandosLesson</id>
+		<name>Shan'do's Lesson</name>
+		<tags>choose</tags>
+		<manaCost>0</manaCost>
+		<text>Summon two 2/2 Treants with Taunt</text>
+		<class>druid</class>
+		<rarity></rarity>
+		<set>classic</set>
+		<effects>
+			<cast id="SUMMON" filter="Treant01" position="left" />
+			<cast id="SUMMON" filter="Treant01" position="right" />
+		</effects>
+	</spell>
+
+	<minion>
+        <id>Treant01</id>
+        <name>Treant</name>
+        <tags></tags>
+        <manaCost>2</manaCost>
+        <attack>2</attack>
+        <health>2</health>
+        <text>Taunt</text>
+        <class>Priest</class>
+        <rarity>Rare</rarity>
+        <race></race>
+        <set>msog</set>
+        <effects>
+			<taunt/>
+		</effects>
+    </minion>
+	
+
+</minions>
